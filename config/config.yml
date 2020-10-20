@@ -1,0 +1,38 @@
+samples: config/samples.tsv
+
+suffix: .fastq.gz
+
+# The root argument tells you where the genome will be located
+# on the local system. All other arguments are required for
+# downloading
+ref:
+  build: GRCh37
+  genbank: GCA_000001405.1
+  gencode: 33
+  assembly: primary_assembly
+  root: /hpcfs/users/a1018048/refs
+
+# Given we only have 50nt reads, don't group during fastqc
+fastqc:
+  params: "--nogroup --noextract"
+
+# Settings for AdapterRemoval
+trimming:
+  adapter1: AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG
+  adapter2: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+  maxns: 1
+  minlength: 35
+  minqual: 30
+
+# Settings for HicPro
+hicpro:
+  ncpu: 32
+  pair1_ext: _R1
+  pair2_ext: _R2
+  phred: 33
+  min_mapq: 0
+  enzyme: HindIII
+  ligation_site: AAGCTAGCTT
+  bin_size: 10000 40000
+  matrix_format: complete
+
