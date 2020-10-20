@@ -23,7 +23,7 @@ rule get_chrom_sizes:
         """
 
 rule find_rs_fragments:
-    input: rules.get_reference.output.fa
+    input: '/hpcfs/users/a1018048/refs/gencode-release-33/GRCh37/dna/GRCh37.primary_assembly.genome.fa'
     output:
         script = "scripts/digest_genome.py",
         rs = rs_frags
@@ -47,7 +47,7 @@ rule find_rs_fragments:
 
 rule make_hicpro_config:
     input:
-        idx = rules.bowtie2_index.output[0],
+        idx = '/hpcfs/users/a1018048/refs/gencode-release-33/GRCh37/dna/bt2/',
         rs = rs_frags,
         chr_sizes = chr_sizes
     output:
@@ -56,10 +56,9 @@ rule make_hicpro_config:
     threads: 1
     shell:
         """
-        IDX=$(dirname {input.idx})
         Rscript --vanilla \
           scripts/write_hicpro_config.R \
-          $IDX \
+          {input.idx} \
           {input.chr_sizes} \
           {input.rs} \
           {output}

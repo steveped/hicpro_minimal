@@ -36,14 +36,8 @@ HIC_BED = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}
 
 ## Define all the required outputs as a single object
 REFS = [chr_sizes, rs_frags]
-FAGZ = [os.path.join(ref_root, ref_fagz)]
-BOWTIEIDX = expand([ref_root + "/bt2/{prefix}.{sub}.bt2"],
-               prefix = config['ref']['build'] + "." + assembly,
-               sub = ['1', '2', '3', '4', 'rev.1', 'rev.2'] )
 ALL_OUTPUTS = []
 ALL_OUTPUTS.extend(REFS)
-ALL_OUTPUTS.extend([BOWTIEIDX])
-ALL_OUTPUTS.extend(FAGZ)
 ALL_OUTPUTS.extend([hicpro_config, digest_script])
 ALL_OUTPUTS.extend(HIC_PAIRS)
 ALL_OUTPUTS.extend(HIC_MAT)
@@ -53,6 +47,5 @@ rule all:
     input:
         ALL_OUTPUTS
 
-include: "rules/reference.smk"
 include: "rules/hicpro.smk"
 
