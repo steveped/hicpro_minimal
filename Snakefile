@@ -28,21 +28,21 @@ rs_frags = os.path.join(os.getcwd(), "config", build + "_" + config['hicpro']['e
 bins = re.split(r" ", config['hicpro']['bin_size'])
 hicpro_config = "config/hicpro-config.txt"
 digest_script = "scripts/digest_genome.py"
-HIC_PAIRS = expand(["data/hic/hic_results/data/{sample}_allValidPairs"],
-                   sample = samples)
-HIC_MAT = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}.matrix"],
-                 bin = bins, sample = samples)
-HIC_BED = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}_abs.bed"],
-                 bin = bins, sample = samples)
+BAM = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2pairs.bam"],
+                     sample = samples)
+#HIC_PAIRS = expand(["data/hic/hic_results/data/{sample}_allValidPairs"],
+#                   sample = samples)
+#HIC_MAT = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}.matrix"],
+#                 bin = bins, sample = samples)
+#HIC_BED = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}_abs.bed"],
+#                 bin = bins, sample = samples)
 
 ## Define all the required outputs as a single object
 REFS = [chr_sizes, rs_frags]
 ALL_OUTPUTS = []
 ALL_OUTPUTS.extend(REFS)
 ALL_OUTPUTS.extend([hicpro_config, digest_script])
-ALL_OUTPUTS.extend(HIC_PAIRS)
-ALL_OUTPUTS.extend(HIC_MAT)
-ALL_OUTPUTS.extend(HIC_BED)
+ALL_OUTPUTS.extend(BAM)
 
 rule all:
     input:
