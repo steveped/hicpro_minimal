@@ -71,12 +71,8 @@ rule run_hicpro_mapping:
                        sample = samples, suffix = suffix,
                        reads = [config['hicpro']['pair1_ext'], config['hicpro']['pair2_ext']])
     output:
-        valid_pairs = expand(["data/hic/hic_results/data/{sample}_allValidPairs"],
-                             sample = samples),
-        mat = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}.matrix"],
-                     sample = samples, bin = bins),
-        bed = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}_abs.bed"],
-                     sample = samples, bin = bins)
+        bam = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2pairs.bam"],
+                     sample = samples)
     log: "logs/hicpro/run_hicpro.log"
     threads: config['hicpro']['ncpu']
     shell:

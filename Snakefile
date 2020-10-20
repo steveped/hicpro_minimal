@@ -12,14 +12,15 @@ suffix = config['suffix']
 #################################
 ## Variables for the reference ##
 #################################
+build = config['ref']['build']
 ref_root = os.path.join(config['ref']['root'], "gencode-release-" + str(config['ref']['gencode']),
-                        config['ref']['build'], "dna")
+                        build, "dna")
 # Key output files
 assembly = config['ref']['assembly'] + ".genome"
-ref_fa = config['ref']['build'] + "." + assembly + ".fa"
+ref_fa = build + "." + assembly + ".fa"
 ref_fagz = ref_fa + ".gz"
-chr_sizes = os.path.join(os.getcwd(), "config", config['ref']['build'] + ".chr_sizes.tsv")
-rs_frags = os.path.join(os.getcwd(), "config", config['ref']['build'] + "_" + config['hicpro']['enzyme'] + "_fragment.bed")
+chr_sizes = os.path.join(os.getcwd(), "config", build + ".chr_sizes.tsv")
+rs_frags = os.path.join(os.getcwd(), "config", build + "_" + config['hicpro']['enzyme'] + "_fragment.bed")
 
 #####################
 ## HiC-Pro outputs ##
