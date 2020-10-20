@@ -26,7 +26,7 @@ trimming:
 
 # Settings for HicPro
 hicpro:
-  ncpu: 32
+  ncpu: 1
   pair1_ext: _R1
   pair2_ext: _R2
   phred: 33
