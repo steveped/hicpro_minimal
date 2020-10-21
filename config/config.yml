@@ -14,7 +14,7 @@ ref:
 
 # Settings for HicPro
 hicpro:
-  ncpu: 2
+  ncpu: 4
   pair1_ext: _R1
   pair2_ext: _R2
   phred: 33
