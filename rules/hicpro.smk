@@ -86,8 +86,15 @@ rule run_hicpro_mapping:
         ## Load modules
         module load HiC-Pro/2.9.0-foss-2016b
 
+        ## Remove any existing data as leaving this here causes HicPro to
+        ## make an interactive request. Piping `yes` into HicPro may be the
+        ## source of some current problems
+        if [[ -d {params.outdir} ]]; then
+          rm -rf {params.outdir}
+        fi
+
         ##Run HiC-pro responding to yes to any interactive requests
-        yes | HiC-Pro \
+        HiC-Pro \
           -s mapping \
           -c {input.config} \
           -i {params.indir} \
