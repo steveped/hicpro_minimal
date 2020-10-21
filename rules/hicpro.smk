@@ -71,7 +71,7 @@ rule run_hicpro_mapping:
                        sample = samples, suffix = suffix,
                        reads = [config['hicpro']['pair1_ext'], config['hicpro']['pair2_ext']])
     output:
-        bam = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2pairs.bam"],
+        bam = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2merged.bam"],
                      sample = samples)
     params:
         indir = "data/test_data",
