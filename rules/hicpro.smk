@@ -131,3 +131,29 @@ rule hic_pro_proc:
           -o {params.outdir} &> {log}
         """
 
+rule hic_pro_qc:
+    input:
+        config = hicpro_config,
+        files = rules.hicpro_mapping.output.bam
+    output:
+        pic = directory("data/hic/hic_results/pic")
+    params:
+        indir = "data/hic/bowtie_results/bwt2",
+        outdir = "data/hic"
+    log: "logs/hicpro/hic_pro_qc.log"
+    threads: config['hicpro']['ncpu']
+    shell:
+        """
+        ######################################
+        ## Specific to phoenix for now only ##
+        ######################################
+        ## Load modules
+        module load HiC-Pro/2.9.0-foss-2016b
+
+        ##Run HiC-pro responding to yes to any interactive requests
+        HiC-Pro \
+          -s quality_checks \
+          -c {input.config} \
+          -i {params.indir} \
+          -o {params.outdir} &> {log}
+        """
