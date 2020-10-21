@@ -73,7 +73,7 @@ rule run_hicpro_mapping:
     output:
         bam = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2pairs.bam"],
                      sample = samples)
-    param:
+    params:
         indir = "data/test_data",
         outdir = "data/hic"
     log: "logs/hicpro/run_hicpro_mapping.log"
