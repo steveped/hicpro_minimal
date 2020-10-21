@@ -64,7 +64,7 @@ rule make_hicpro_config:
           {output}
         """
 
-rule run_hicpro_mapping:
+rule hicpro_mapping:
     input:
         config = hicpro_config,
         files = expand(["data/test_data/{sample}{reads}{suffix}"],
@@ -76,7 +76,7 @@ rule run_hicpro_mapping:
     params:
         indir = "data/test_data",
         outdir = "data/hic"
-    log: "logs/hicpro/run_hicpro_mapping.log"
+    log: "logs/hicpro/hicpro_mapping.log"
     threads: config['hicpro']['ncpu']
     shell:
         """
@@ -101,5 +101,33 @@ rule run_hicpro_mapping:
           -o {params.outdir} &> {log}
         """
 
+rule hic_pro_proc:
+    input:
+        config = hicpro_config,
+        files = rules.hicpro_mapping.output.bam
+    output:
+        bam = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2pairs.bam"],
+                     sample = samples),
+        pairs = expand(["data/hic/hic_results/data/{sample}_" + build + "." + assembly + "bwt2pairs.validPairs"],
+                     sample = samples)
+    params:
+        indir = "data/hic/bowtie_results/bwt2",
+        outdir = "data/hic"
+    log: "logs/hicpro/hic_pro_proc.log"
+    threads: config['hicpro']['ncpu']
+    shell:
+        """
+        ######################################
+        ## Specific to phoenix for now only ##
+        ######################################
+        ## Load modules
+        module load HiC-Pro/2.9.0-foss-2016b
 
+        ##Run HiC-pro responding to yes to any interactive requests
+        HiC-Pro \
+          -s proc_hic \
+          -c {input.config} \
+          -i {params.indir} \
+          -o {params.outdir} &> {log}
+        """
 
