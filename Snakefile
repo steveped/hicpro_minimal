@@ -35,9 +35,9 @@ PROC_BAM = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + asse
 PROC_PAIRS = expand(["data/hic/hic_results/data/{sample}_" + build + "." + assembly + ".bwt2pairs.validPairs"],
                     sample = samples)
 HIC_QC = ['data/hic/hic_results/pic']
+VALID_PAIRS = expand(["data/hic/hic_results/data/{rep}/{rep}_allValidPairs"],
+                     rep = df['sample'])
 
-#HIC_PAIRS = expand(["data/hic/hic_results/data/{sample}_allValidPairs"],
-#                   sample = samples)
 #HIC_MAT = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}.matrix"],
 #                 bin = bins, sample = samples)
 #HIC_BED = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}_abs.bed"],
@@ -52,6 +52,7 @@ ALL_OUTPUTS.extend(MAPPING)
 ALL_OUTPUTS.extend(PROC_BAM)
 ALL_OUTPUTS.extend(PROC_PAIRS)
 ALL_OUTPUTS.extend(HIC_QC)
+ALL_OUTPUTS.extened(VALID_PAIRS)
 
 rule all:
     input:
