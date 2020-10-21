@@ -108,7 +108,7 @@ rule hic_pro_proc:
     output:
         bam = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2pairs.bam"],
                      sample = samples),
-        pairs = expand(["data/hic/hic_results/data/{sample}_" + build + "." + assembly + "bwt2pairs.validPairs"],
+        pairs = expand(["data/hic/hic_results/data/{sample}_" + build + "." + assembly + ".bwt2pairs.validPairs"],
                      sample = samples)
     params:
         indir = "data/hic/bowtie_results/bwt2",

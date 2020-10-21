@@ -32,7 +32,7 @@ MAPPING = expand(["data/hic/bowtie_results/bwt2/{sample}_{reads}_" + build + "."
               reads = ['R1', 'R2'], sample = samples)
 PROC_BAM = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2pairs.bam"],
                   sample = samples)
-PROC_PAIRS = expand(["data/hic/hic_results/data/{sample}_" + build + "." + assembly + "bwt2pairs.validPairs"],
+PROC_PAIRS = expand(["data/hic/hic_results/data/{sample}_" + build + "." + assembly + ".bwt2pairs.validPairs"],
                     sample = samples)
 
 #HIC_PAIRS = expand(["data/hic/hic_results/data/{sample}_allValidPairs"],
