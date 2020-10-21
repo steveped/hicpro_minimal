@@ -101,7 +101,7 @@ rule hicpro_mapping:
           -o {params.outdir} &> {log}
         """
 
-rule hic_pro_proc:
+rule hicpro_proc:
     input:
         config = hicpro_config,
         files = rules.hicpro_mapping.output.bam
@@ -113,7 +113,7 @@ rule hic_pro_proc:
     params:
         indir = "data/hic/bowtie_results/bwt2",
         outdir = "data/hic"
-    log: "logs/hicpro/hic_pro_proc.log"
+    log: "logs/hicpro/hicpro_proc.log"
     threads: config['hicpro']['ncpu']
     shell:
         """
@@ -131,7 +131,7 @@ rule hic_pro_proc:
           -o {params.outdir} &> {log}
         """
 
-rule hic_pro_qc:
+rule hicpro_qc:
     input:
         config = hicpro_config,
         files = rules.hicpro_mapping.output.bam
@@ -140,7 +140,7 @@ rule hic_pro_qc:
     params:
         indir = "data/hic/bowtie_results/bwt2",
         outdir = "data/hic"
-    log: "logs/hicpro/hic_pro_qc.log"
+    log: "logs/hicpro/hicpro_qc.log"
     threads: config['hicpro']['ncpu']
     shell:
         """
@@ -158,17 +158,17 @@ rule hic_pro_qc:
           -o {params.outdir} &> {log}
         """
 
-rule hic_pro_merge:
+rule hicpro_merge:
     input:
         config = hicpro_config,
-        files = rules.hic_pro_proc.output.pairs
+        files = rules.hicpro_proc.output.pairs
     output:
         pairs = expand(["data/hic/hic_results/data/{rep}/{rep}_allValidPairs"],
                        rep = df['sample'])
     params:
         indir = "data/hic/hic_results/data",
         outdir = "data/hic"
-    log: "logs/hicpro/hic_pro_merge.log"
+    log: "logs/hicpro/hicpro_merge.log"
     threads: config['hicpro']['ncpu']
     shell:
         """
@@ -181,6 +181,36 @@ rule hic_pro_merge:
         ##Run HiC-pro responding to yes to any interactive requests
         HiC-Pro \
           -s merge_persample \
+          -c {input.config} \
+          -i {params.indir} \
+          -o {params.outdir} &> {log}
+        """
+
+rule build_contact_maps:
+    input:
+        config = hicpro_config,
+        pairs = rules.hicpro_merge.otput.pairs
+    output:
+        bed = expand(["data/hic/hic_results/matrix/{rep}/{bin}/{rep}_{bin}_{type}.bed"],
+                     rep = df['sample'], bin = bins, type = ['abs', 'ord']),
+        mat = expand(["data/hic/hic_results/matrix/{rep}/{bin}/{rep}_{bin}.matrix"],
+                     rep = df['sample'], bin = bins)
+    params:
+        indir = "data/hic/hic_results/data",
+        outdir = "data/hic"
+    log: "logs/hicpro/build_contact_maps.log"
+    threads: config['hicpro']['ncpu']
+    shell:
+        """
+        ######################################
+        ## Specific to phoenix for now only ##
+        ######################################
+        ## Load modules
+        module load HiC-Pro/2.9.0-foss-2016b
+
+        ##Run HiC-pro responding to yes to any interactive requests
+        HiC-Pro \
+          -s build_contact_maps \
           -c {input.config} \
           -i {params.indir} \
           -o {params.outdir} &> {log}
