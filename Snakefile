@@ -28,8 +28,8 @@ rs_frags = os.path.join(os.getcwd(), "config", build + "_" + config['hicpro']['e
 bins = re.split(r" ", config['hicpro']['bin_size'])
 hicpro_config = "config/hicpro-config.txt"
 digest_script = "scripts/digest_genome.py"
-BAM = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2pairs.bam"],
-                     sample = samples)
+BAM = expand(["data/hic/bowtie_results/bwt2/{sample}_{reads}_" + build + "." + assembly + ".bwt2merged.bam"],
+              reads = ['R1', 'R2'], sample = samples)
 #HIC_PAIRS = expand(["data/hic/hic_results/data/{sample}_allValidPairs"],
 #                   sample = samples)
 #HIC_MAT = expand(["data/hic/hic_results/matrix/{sample}/raw/{bin}/{sample}_{bin}.matrix"],
