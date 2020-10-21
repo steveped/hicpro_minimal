@@ -73,7 +73,10 @@ rule run_hicpro_mapping:
     output:
         bam = expand(["data/hic/bowtie_results/bwt2/{sample}_" + build + "." + assembly + ".bwt2pairs.bam"],
                      sample = samples)
-    log: "logs/hicpro/run_hicpro.log"
+    param:
+        indir = "data/test_data",
+        outdir = "data/hic"
+    log: "logs/hicpro/run_hicpro_mapping.log"
     threads: config['hicpro']['ncpu']
     shell:
         """
@@ -87,8 +90,8 @@ rule run_hicpro_mapping:
         yes | HiC-Pro \
           -s mapping \
           -c {input.config} \
-          -i "data/trimmed/fastq" \
-          -o "data/hic" &> {log}
+          -i {params.indir} \
+          -o {params.outdir} &> {log}
         """
 
 

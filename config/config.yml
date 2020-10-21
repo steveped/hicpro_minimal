@@ -12,21 +12,9 @@ ref:
   assembly: primary_assembly
   root: /hpcfs/users/a1018048/refs
 
-# Given we only have 50nt reads, don't group during fastqc
-fastqc:
-  params: "--nogroup --noextract"
-
-# Settings for AdapterRemoval
-trimming:
-  adapter1: AGATCGGAAGAGCACACGTCTGAACTCCAGTCACNNNNNNATCTCGTATGCCGTCTTCTGCTTG
-  adapter2: AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
-  maxns: 1
-  minlength: 35
-  minqual: 30
-
 # Settings for HicPro
 hicpro:
-  ncpu: 1
+  ncpu: 2
   pair1_ext: _R1
   pair2_ext: _R2
   phred: 33
