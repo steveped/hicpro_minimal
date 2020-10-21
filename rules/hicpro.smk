@@ -168,7 +168,7 @@ rule hic_pro_merge:
     params:
         indir = "data/hic/hic_results/data",
         outdir = "data/hic"
-    log: "logs/hicpro/hic_pro_qc.log"
+    log: "logs/hicpro/hic_pro_merge.log"
     threads: config['hicpro']['ncpu']
     shell:
         """
@@ -185,9 +185,3 @@ rule hic_pro_merge:
           -i {params.indir} \
           -o {params.outdir} &> {log}
         """
-
-
-
-
-
-HiC-Pro -s merge_persample -i data/hic/hic_results/data -c config/hicpro-config.txt -o data/hic/

@@ -52,7 +52,7 @@ ALL_OUTPUTS.extend(MAPPING)
 ALL_OUTPUTS.extend(PROC_BAM)
 ALL_OUTPUTS.extend(PROC_PAIRS)
 ALL_OUTPUTS.extend(HIC_QC)
-ALL_OUTPUTS.extened(VALID_PAIRS)
+ALL_OUTPUTS.extend(VALID_PAIRS)
 
 rule all:
     input:
