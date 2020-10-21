@@ -37,9 +37,9 @@ PROC_PAIRS = expand(["data/hic/hic_results/data/{sample}_" + build + "." + assem
 HIC_QC = ['data/hic/hic_results/pic']
 VALID_PAIRS = expand(["data/hic/hic_results/data/{rep}/{rep}_allValidPairs"],
                      rep = df['sample'])
-HIC_MAT = expand(["data/hic/hic_results/matrix/{rep}/{bin}/{rep}_{bin}.matrix"],
+HIC_MAT = expand(["data/hic/hic_results/matrix/{rep}/raw/{bin}/{rep}_{bin}.matrix"],
                      rep = df['sample'], bin = bins)
-HIC_BED = expand(["data/hic/hic_results/matrix/{rep}/{bin}/{rep}_{bin}_{type}.bed"],
+HIC_BED = expand(["data/hic/hic_results/matrix/{rep}/raw/{bin}/{rep}_{bin}_{type}.bed"],
                      rep = df['sample'], bin = bins, type = ['abs', 'ord'])
 
 ## Define all the required outputs as a single object

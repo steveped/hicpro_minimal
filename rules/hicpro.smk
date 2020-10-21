@@ -189,11 +189,11 @@ rule hicpro_merge:
 rule build_contact_maps:
     input:
         config = hicpro_config,
-        pairs = rules.hicpro_merge.otput.pairs
+        pairs = rules.hicpro_merge.output.pairs
     output:
-        bed = expand(["data/hic/hic_results/matrix/{rep}/{bin}/{rep}_{bin}_{type}.bed"],
+        bed = expand(["data/hic/hic_results/matrix/{rep}/raw/{bin}/{rep}_{bin}_{type}.bed"],
                      rep = df['sample'], bin = bins, type = ['abs', 'ord']),
-        mat = expand(["data/hic/hic_results/matrix/{rep}/{bin}/{rep}_{bin}.matrix"],
+        mat = expand(["data/hic/hic_results/matrix/{rep}/raw/{bin}/{rep}_{bin}.matrix"],
                      rep = df['sample'], bin = bins)
     params:
         indir = "data/hic/hic_results/data",
